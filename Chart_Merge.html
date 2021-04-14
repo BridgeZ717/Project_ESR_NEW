@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Merge</title>
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <!-- ChartJS zoom-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.6/chartjs-plugin-zoom.js"></script>
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <header class="d-flex justify-content-center py-3">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="Chart_X.html" class="nav-link">X Chart</a></li>
+                <li class="nav-item"><a href="Chart_Y.html" class="nav-link">Y Chart</a></li>
+                <li class="nav-item"><a href="Chart_Z.html" class="nav-link">Z Chart</a></li>
+                <li class="nav-item"><a href="Chart_Merge.html" class="nav-link active">Merge Chart</a></li>
+            </ul>
+        </header>
+    </div>
+    <div id="chart"><canvas id="myChart"></canvas></div>
+    <div class="container py-5" id="hanging-icons">
+        <h2 class="pb-2 border-bottom">Chart Options</h2>
+        <div class="row g-5 py-5">
+            <div class="col-md-3 d-flex align-items-start">
+                <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                    <svg class="bi" width="1em" height="1em">
+                        <use xlink:href="#toggles2"></use>
+                    </svg>
+                </div>
+                <div>
+                    <h2>Move <span style="color: #00ff00">X</span> Line</h2>
+                    <p>Put Positive number to move right<br>Put Negative number to move left</p>
+                    <input type="text" id="moveX" value="0">
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-start">
+                <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                    <svg class="bi" width="1em" height="1em">
+                        <use xlink:href="#cpu-fill"></use>
+                    </svg>
+                </div>
+                <div>
+                    <h2>Move <span style="color: #ff00ff">Y</span> Line</h2>
+                    <p>Put Positive number to move right,<br>Put Negative number to move left.</p>
+                    <input type="text" id="moveY" value="0">
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-start">
+                <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                    <svg class="bi" width="1em" height="1em">
+                        <use xlink:href="#tools"></use>
+                    </svg>
+                </div>
+                <div>
+                    <h2>Move <span style="color: #00ffff">Z</span> Line</h2>
+                    <p>Put Positive number to move right,<br>Put Negative number to move left.</p>
+                    <input type="text" id="moveZ" value="0">
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-start">
+                <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                    <svg class="bi" width="1em" height="1em">
+                        <use xlink:href="#tools"></use>
+                    </svg>
+                </div>
+                <div>
+                    <h2>Export to CSV File</h2>
+                    <p>Please enter your file name<br>Leave it empty to use the name that entered before</p>
+                    <div><input type="text" id="fileName" value="">
+                    <p></p>
+                    <a href="#" class="btn btn-dark btn-sm" onclick="exportToCsv()">
+                        Download
+                    </a>
+                </div>
+                </div>
+            </div>
+
+            <a href="#" class="btn btn-primary" onclick="updateData()">
+                Create Chart
+            </a>
+        </div>
+        <div class="container py-5" id="minmax"></div>
+    </div>
+    <script>
+        var xlabels;
+        var xAve = [];
+        var yAve = [];
+        var zAve = [];
+        var finalAve;
+        var finX ;
+        var finY ;
+        var finZ ;
+        createChart();
+        async function createChart() {
+            var moveX = parseInt(document.getElementById("moveX").value);
+            var moveY = parseInt(document.getElementById("moveY").value);
+            var moveZ = parseInt(document.getElementById("moveZ").value);
+            finX = [];
+            finY = [];
+            finZ = [];
+            xlabels = [];
+            xAve = [];
+            yAve = [];
+            zAve = [];
+            finalAve = [];
+            xlabelsFlag = 0;
+            //degree = 0;
+            await getData();
+            for (var i = 0; i < xAve.length; i++) {
+                xlabels.push(i);
+            }
+            //move array start
+            finX = movingArr(xAve, finX, moveX);
+            finY = movingArr(yAve, finY, moveY);
+            finZ = movingArr(zAve, finZ, moveZ);
+            function movingArr(Arr, finArr, move) {
+                for (var i = -move; i < Arr.length; i++) {
+                    var Tempdata = Arr[i];
+                    finArr.push(Tempdata);
+
+                }
+                return finArr;
+            }
+            finAverage(finalAve, finX, finY, finZ)
+            minMax();
+            findWavePoint();
+            var ctx = document.getElementById('myChart').getContext('2d');
+            window.chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'line',
+                // The data for our dataset
+                data: {
+                    labels: xlabels,
+                    datasets: [{
+                        label: 'Merge',
+                        fill: false,
+                        //backgroundColor: 'rgb(255, 99, 132)',
+                        borderWidth: 2,
+                        borderColor: 'rgb(255, 0, 0)',
+                        data: finalAve,
+                        pointRadius: 0,
+                        PointHoverRadius: 3
+                    }, {
+                        label: 'X average',
+                        fill: false,
+                        //backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(0, 255, 0)',
+                        borderWidth: 2,
+                        data: finX,
+                        pointRadius: 0,
+                        PointHoverRadius: 3
+                    }, {
+                        label: 'Y average',
+                        fill: false,
+                        //backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 0, 255)',
+                        borderWidth: 2,
+                        data: finY,
+                        pointRadius: 0,
+                        PointHoverRadius: 3
+                    }, {
+                        label: 'Z average',
+                        fill: false,
+                        //backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(0, 255, 255)',
+                        borderWidth: 2,
+                        data: finZ,
+                        pointRadius: 0,
+                        PointHoverRadius: 3
+                    }]
+                },
+
+                // Configuration options go here
+                options: {
+
+                    pan: {
+                        enabled: true,
+                        mode: 'xy',
+                    },
+                    zoom: {
+                        enabled: true,
+                        mode: 'xy', // or 'x' for "drag" version
+                    },
+                }
+            });
+        }
+
+        async function getData() {
+            var xAveArr = sessionStorage.getItem('xAveArr');
+            var yAveArr = sessionStorage.getItem('yAveArr');
+            var zAveArr = sessionStorage.getItem('zAveArr');
+
+
+            var Xrows = xAveArr.split(',').slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
+            Xrows.forEach(elt => {
+                xAve.push(elt);
+            });
+
+            var Yrows = yAveArr.split(',').slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
+            Yrows.forEach(elt => {
+                yAve.push(elt);
+            });
+
+            var Zrows = zAveArr.split(',').slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
+            Zrows.forEach(elt => {
+                zAve.push(elt);
+            });
+        }
+
+        function finAverage(arr, x, y, z) {
+            for (var i = 0; i < x.length; i++) {
+                var ave = ((+x[i]) + (+y[i]) + (+z[i])) / 3
+                arr.push(ave);
+            }
+        }
+        function minMax() {
+            var tempArr = [];
+            for (var i = 0; i < finalAve.length; i++) {
+                if (!isNaN(finalAve[i])) {
+                    tempArr.push(finalAve[i]);
+                }
+            }
+            var min = Math.min.apply(null, tempArr),
+                max = Math.max.apply(null, tempArr);
+            maxX = findX(max);
+            minX = findX(min);
+            document.getElementById("minmax").innerHTML = " T1 (At X: " + maxX + "): " + max + "<br>Spectra Min(At X: " + minX + "): " + min + "<br>";
+        }
+        function findWavePoint() {
+            var tempArr = [];
+            for (var i = 0; i < finalAve.length; i++) {
+                if (finalAve[i - 1] > finalAve[i] && finalAve[i + 1] > finalAve[i]) {
+                    tempArr.push(finalAve[i])
+                }
+            }
+            tempArr.sort(function (a, b) { return a - b });
+            var tempMinX = findX(tempArr[1]);
+            document.getElementById("minmax").innerHTML += "Spectra Min(At X: " + tempMinX + "): " + tempArr[1];
+        }
+        function findX(value) {
+            for (var i = 0; i <= finalAve.length; i++) {
+                if (finalAve[i] == value) {
+                    return i;
+                }
+            }
+        }
+        function updateData() {
+            if (window.chart && window.chart !== null) {
+                window.chart.destroy();
+            }
+            createChart();
+        }
+        function exportToCsv() {
+            var rows = [
+                ["X_Average", "Y_Average", "Z_Average", "Merge",],
+                //["name2", "city2", "more info"]
+            ];
+            
+            for (var i = 1; i < finX.length; i++) {
+                rows[i] = [finX[i], finY[i], finZ[i], finalAve[i]];
+            }
+
+            let csvContent = "data:text/csv;charset=utf-8,"
+                + rows.map(e => e.join(",")).join("\n");
+            //var encodedUri = encodeURI(csvContent);
+            //window.open(encodedUri);
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            
+            // enter and check file name
+            var filename;
+            if (document.getElementById("fileName").value==''){
+                fileName = localStorage.getItem("storageName");
+            }
+            else{
+                fileName = document.getElementById("fileName").value;
+            }
+            link.setAttribute("download", fileName);
+            document.body.appendChild(link); // Required for FF
+
+            link.click(); // This will download the data file named "my_data.csv".
+        }
+    </script>
+
+
+
+</body>
+
+</html>

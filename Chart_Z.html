@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>X Chart</title>
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <!-- ChartJS zoom-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/0.6.6/chartjs-plugin-zoom.js"></script>
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <header class="d-flex justify-content-center py-3">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="Chart_X.html" class="nav-link ">X Chart</a></li>
+                <li class="nav-item"><a href="Chart_Y.html" class="nav-link">Y Chart</a></li>
+                <li class="nav-item"><a href="Chart_Z.html" class="nav-link active ">Z Chart</a></li>
+                <li class="nav-item"><a href="Chart_Merge.html" class="nav-link">Merge Chart</a></li>
+            </ul>
+        </header>
+    </div>
+    <div id="chart">
+        <canvas id="SampleChart"></canvas>
+        <div class="container py-5" id="hanging-icons">
+            <h2 class="pb-2 border-bottom">Chart Options</h2>
+            <div class="row g-5 py-5">
+                <div class="col-md-4 d-flex align-items-start">
+                    <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                        <svg class="bi" width="1em" height="1em">
+                            <use xlink:href="#toggles2"></use>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Set Data Range</h2>
+                        <p>From (X)</p>
+                        <input type="text" id="start" value="900">
+                        <p>To (X)</p>
+                        <input type="text" id="end" value="1250">
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-start">
+                    <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                        <svg class="bi" width="1em" height="1em">
+                            <use xlink:href="#cpu-fill"></use>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Align Range</h2>
+                        <p>From (X)</p>
+                        <input type="text" id="alignStart" value="900">
+                        <p>To (X)</p>
+                        <input type="text" id="alignEnd" value="960">
+                    </div>
+                </div>
+                <div class="col-md-4 d-flex align-items-start">
+                    <div class="icon-square bg-light text-dark flex-shrink-0 me-3">
+                        <svg class="bi" width="1em" height="1em">
+                            <use xlink:href="#tools"></use>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Other Options</h2>
+                        <p>Move <span style="color: #ff0000">0 dg</span> dataset (Positive move right, Negative move
+                            left.) </p>
+                        <input type="text" id="moveDg0" value="0">
+                    </div>
+                </div>
+                <a href="#" class="btn btn-primary" onclick="createChart()">
+                    Create Chart
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="chart"><canvas id="myChart"></canvas></div>
+    <div class="container py-5" id="minmax"></div>
+</body>
+
+<script>
+    var dg0Text = sessionStorage.getItem('Z0dg');
+    var dg0 = getData(dg0Text);
+    var dg20Text = sessionStorage.getItem('Z20dg');
+    var dg20 = getData(dg20Text);
+    var dg40Text = sessionStorage.getItem('Z40dg');
+    var dg40 = getData(dg40Text);
+    var dg60Text = sessionStorage.getItem('Z60dg');
+    var dg60 = getData(dg60Text);
+    var dg80Text = sessionStorage.getItem('Z80dg');
+    var dg80 = getData(dg80Text);
+    var dg100Text = sessionStorage.getItem('Z100dg');
+    var dg100 = getData(dg100Text);
+    var dg120Text = sessionStorage.getItem('Z120dg');
+    var dg120 = getData(dg120Text);
+    var dg140Text = sessionStorage.getItem('Z140dg');
+    var dg140 = getData(dg140Text);
+    var dg160Text = sessionStorage.getItem('Z160dg');
+    var dg160 = getData(dg160Text);
+    var dg180Text = sessionStorage.getItem('Z180dg');
+    var dg180 = getData(dg180Text);
+
+    var dataMove;
+    var mdg0, mdg20, mdg40, mdg60, mdg80, mdg100, mdg120, mdg140, mdg160, mdg180;//moved dg
+    var findg0, findg20, findg40, findg60, findg80, findg100, findg120, findg140, findg160, findg180;//cuted dg
+    
+    createSampleChart();
+
+    function getData(text) {
+        var arr = [];
+        var values = text.split(',');
+        for (var i = 0; i < values.length; i++) {
+            arr.push(values[i]);
+        }
+        return arr;
+    }
+
+    function setXlabel(arr) {
+        var xlabels = [];
+        for (var i = 1; i <= arr.length; i++) {
+            xlabels.push(i);
+        }
+        return xlabels;
+    }
+
+    function move0dg(move) {
+        var arr = [];
+        for (var i = 0; i < dg0.length; i++) {
+            arr.push(dg0[i - move])
+        }
+        return arr;
+    }
+
+    function alignDataIndex(arr, start, end) {
+        var tempMax = findRangeMax(arr, start, end);
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i] == tempMax) {
+                return i;//finde the tempMax to align the data
+            }
+        }
+    }
+    function alignData(arr, dataMove, alignIndex) {
+        var tempArr = [];
+        for (var i = 0; i < arr.length; i++) {
+            tempArr.push(arr[i+alignIndex - dataMove]);
+        }
+        return tempArr;
+    }
+    function average(dg0, dg20, dg40, dg60, dg80, dg100, dg120, dg140, dg160, dg180) {
+        var tempArr = [];
+        for (var i = 0; i < dg0.length; i++) {
+            var ave = ((+dg0[i]) + (+dg20[i]) + (+dg40[i]) + (+dg60[i]) + (+dg80[i]) + (+dg100[i]) + (+dg120[i]) + (+dg140[i]) + (+dg160[i]) + (+dg180[i])) / 10
+            tempArr.push(ave);
+        }
+        return tempArr;
+    }
+    function cutData(arr, start, end) {
+        var tempArr = [];
+        for (start; start < end; start++) {
+            tempArr.push(arr[start]);
+        }
+        return tempArr;
+    }
+    function findRangeMax(arr, start, end) {
+        var tempArr = [];
+
+        for (start; start <= end; start++) {
+            tempArr.push(arr[start]);
+        }
+
+        return Math.max.apply(this, tempArr);
+    }
+    function findMax(arr) {
+        return Math.max.apply(this, arr)
+    }
+
+
+    async function createSampleChart() {
+        var sampleXlabels = setXlabel(dg0)
+        var sampleDg0 = dg0;
+        var sampleDg20 = dg20;
+        //create chart start
+        var ctx = document.getElementById('SampleChart').getContext('2d');
+        window.chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            // The data for our dataset
+            data: {
+                labels: sampleXlabels,
+                datasets: [{
+                    label: '0dg ref',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderWidth: 1,
+                    borderColor: 'rgb(255, 0, 0)',
+                    data: sampleDg0,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '20dg（Align reference line)',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderWidth: 2,
+                    borderColor: 'rgb(0, 0, 255)',
+                    data: sampleDg20,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }]
+            },
+            // Configuration options go here
+            options: {
+
+                pan: {
+                    enabled: true,
+                    mode: 'xy',
+                },
+                zoom: {
+                    enabled: true,
+                    mode: 'xy', // or 'x' for "drag" version
+                },
+            }
+        });
+
+    }
+
+    async function createChart() {
+        var move0 = parseInt(document.getElementById("moveDg0").value);
+        //var dataBefore = parseInt(document.getElementById("dataBefore").value);//?? still need or not?
+        var rangeFrom = parseInt(document.getElementById("start").value);
+        var rangeTo = parseInt(document.getElementById("end").value);
+        var alignStart = parseInt(document.getElementById("alignStart").value);
+        var alignTo = parseInt(document.getElementById("alignEnd").value);
+        var maxArr = [];
+        var degree = 0;
+        var degrees = [];
+        var xlabels = [];
+        var dataMove; //how many X need to move to align
+
+        document.getElementById("minmax").innerHTML = '<div class="container py-5" id="hanging-icons"><div class="row g-5 py-5"><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg></div><div><h2 class="display-5">Z Maximum Point Table</h2><table class="table"><thead><tr><th scope="col">Max 0dg-180dg</th></tr></thead><tbody id="tableContent"></tbody></table></div></div><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"></use></svg></div><div><h2 class="display-5">Z Maximum Point Chart</h2><canvas id="maxChart"></canvas></div></div></div></div>';
+
+        function execute(dg, mdg, findg, rangeFrom, rangeTo, alignStart, alignEnd,mdgName,findgName) {
+            mdg=[];
+            findg=[];
+            var index = alignDataIndex(dg, alignStart, alignEnd);
+            if (dg == dg0) {
+                dataMove = index;
+            }
+            mdg = alignData(dg, dataMove, index);
+            findg = cutData(mdg, rangeFrom, rangeTo);
+            window[mdgName] = mdg;
+            window[findgName] = findg;
+            var max = findMax(findg);
+            console.log(mdgName+' '+max)
+
+            maxArr.push(max);
+            degrees.push(degree);
+            //set max table
+            document.getElementById("tableContent").innerHTML += '<tr><td>' + max + '</td></tr>';
+            degree += 20;
+        }
+
+        dg0=move0dg(move0);
+        console.log(mdg0);
+        await execute(dg0, mdg0, findg0, rangeFrom, rangeTo, alignStart, alignTo,'mdg0','findg0');
+        await execute(dg20, mdg20, findg20, rangeFrom, rangeTo, alignStart, alignTo,'mdg20','findg20');
+        await execute(dg40, mdg40, findg40, rangeFrom, rangeTo, alignStart, alignTo,'mdg40','findg40');
+        await execute(dg60, mdg60, findg60, rangeFrom, rangeTo, alignStart, alignTo,'mdg60','findg60');
+        await execute(dg80, mdg80, findg80, rangeFrom, rangeTo, alignStart, alignTo,'mdg80','findg80');
+        await execute(dg100, mdg100, findg100, rangeFrom, rangeTo, alignStart, alignTo,'mdg100','findg100');
+        await execute(dg120, mdg120, findg120, rangeFrom, rangeTo, alignStart, alignTo,'mdg120','findg120');
+        await execute(dg140, mdg140, findg140, rangeFrom, rangeTo, alignStart, alignTo,'mdg140','findg140');
+        await execute(dg160, mdg160, findg160, rangeFrom, rangeTo, alignStart, alignTo,'mdg160','findg160');
+        await execute(dg180, mdg180, findg180, rangeFrom, rangeTo, alignStart, alignTo,'mdg180','findg180');
+        
+        xlabels = setXlabel(findg0);
+        console.log(dg20);
+        //calculate and save average array 
+        var aveArr = average(mdg0, mdg20, mdg40, mdg60, mdg80, mdg100, mdg120, mdg140, mdg160, mdg180);
+        sessionStorage.setItem('zAveArr', aveArr);
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        if (window.chart && window.chart !== null) {
+            window.chart.destroy();
+            createSampleChart();
+        }
+        window.chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            // The data for our dataset
+            data: {
+                labels: xlabels,
+                datasets: [{
+                    label: '0dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderWidth: 2,
+                    borderColor: 'rgb(255, 0, 0)',
+                    data: findg0,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '20dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(58, 120, 187)',
+                    borderWidth: 2,
+                    data: findg20,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '40dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(82, 132, 181)',
+                    borderWidth: 2,
+                    data: findg40,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '60dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(101, 144, 175)',
+                    borderWidth: 2,
+                    data: findg60,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '80dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(116, 157, 169)',
+                    borderWidth: 2,
+                    data: findg80,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '100dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(129, 170, 163)',
+                    borderWidth: 2,
+                    data: findg100,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '120dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(141, 183, 156)',
+                    borderWidth: 2,
+                    data: findg120,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '140dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(151, 196, 148)',
+                    borderWidth: 2,
+                    data: findg140,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '160dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(161, 210, 141)',
+                    borderWidth: 2,
+                    data: findg160,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }, {
+                    label: '180dg',
+                    fill: false,
+                    //backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(171, 223, 132)',
+                    borderWidth: 2,
+                    data: findg180,
+                    pointRadius: 0,
+                    PointHoverRadius: 3
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+
+                pan: {
+                    enabled: true,
+                    mode: 'xy',
+                },
+                zoom: {
+                    enabled: true,
+                    mode: 'xy', // or 'x' for "drag" version
+                }
+            },
+        });
+        //create max chart
+        var mct = document.getElementById('maxChart').getContext('2d');
+        var maxChart = new Chart(mct, {
+            // The type of chart we want to create
+            type: 'line',
+            // The data for our dataset
+            data: {
+                labels: degrees,
+                datasets: [{
+                    label: 'Maximum',
+                    fill: false,
+                    borderWidth: 2,
+                    borderColor: 'rgb(255, 0, 0)',
+                    data: maxArr,
+                    pointRadius: 1,
+                    PointHoverRadius: 3
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+        });
+    }
+</script>
+
+
+</html>
