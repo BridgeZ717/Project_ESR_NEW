@@ -188,6 +188,9 @@
         var sampleXlabels = setXlabel(dg0)
         var sampleDg0 = dg0;
         var sampleDg20 = dg20;
+        if (window.chart && window.chart !== null) {
+            window.chart.destroy();
+        }
         //create chart start
         var ctx = document.getElementById('SampleChart').getContext('2d');
         window.chart = new Chart(ctx, {

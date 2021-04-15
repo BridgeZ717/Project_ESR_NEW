@@ -188,6 +188,9 @@
         var sampleDg0 = dg0;
         var sampleDg20 = dg20;
         //create chart start
+        if (window.chart && window.chart !== null) {
+            window.chart.destroy();
+        }
         var ctx = document.getElementById('SampleChart').getContext('2d');
         window.chart = new Chart(ctx, {
             // The type of chart we want to create
