@@ -251,9 +251,11 @@
         function execute(dg, mdg, findg, rangeFrom, rangeTo, alignStart, alignEnd, mdgName, findgName) {
             mdg = [];
             findg = [];
-            var index = alignDataIndex(dg, alignStart, alignEnd);
-            if (dg == dg0) {
+            var index = alignDataIndex(dg, alignStart, alignEnd);//align index
+    
+            if (dg == dg0) {//check how many they need to move to align with 0dg.
                 dataMove = index;
+                sessionStorage.setItem('xIndex', index);//use this to align merge chart
             }
             mdg = alignData(dg, dataMove, index);
             findg = cutData(mdg, rangeFrom, rangeTo);

@@ -109,10 +109,14 @@
         var cutedMerge;
         var rangeFrom = parseInt(sessionStorage.getItem('rangeFrom'));
         var rangeTo = parseInt(sessionStorage.getItem('rangeTo'));
+        var xIndex = parseInt(sessionStorage.getItem('xIndex'));
+        var yIndex = parseInt(sessionStorage.getItem('yIndex'));
+        var zIndex = parseInt(sessionStorage.getItem('zIndex'));
+
         createChart();
         async function createChart() {
             var moveX = parseInt(document.getElementById("moveX").value);
-            var moveY = parseInt(document.getElementById("moveY").value);
+            var moveX = parseInt(document.getElementById("moveY").value);
             var moveZ = parseInt(document.getElementById("moveZ").value);
             finX = [];
             finY = [];
@@ -125,21 +129,19 @@
             xlabelsFlag = 0;
             //degree = 0;
             await getData();
+                    //auto align start
+        finX = movingArr(xAve, finX, 0);
+        finY = movingArr(yAve, finY, xIndex - yIndex);
+        finZ = movingArr(zAve, finZ, xIndex - zIndex);
+console.log(yAve);
+console.log(yIndex)
             //move array start
             finX = movingArr(xAve, finX, moveX);
             finY = movingArr(yAve, finY, moveY);
             finZ = movingArr(zAve, finZ, moveZ);
-            function movingArr(Arr, finArr, move) {
-                for (var i = -move; i < Arr.length; i++) {
-                    var Tempdata = Arr[i];
-                    finArr.push(Tempdata);
-
-                }
-                return finArr;
-            }
             finAverage(finalAve, finX, finY, finZ)
             minMax();
-
+            
             cutedX = cutData(finX, rangeFrom, rangeTo);
             cutedY = cutData(finY, rangeFrom, rangeTo);
             cutedZ = cutData(finZ, rangeFrom, rangeTo);
@@ -210,6 +212,14 @@
             });
         }
 
+        function movingArr(Arr, finArr, move) {
+            for (var i = -move; i < Arr.length; i++) {
+                var Tempdata = Arr[i];
+                finArr.push(Tempdata);
+
+            }
+            return finArr;
+        }
         async function getData() {
             var xAveArr = sessionStorage.getItem('xAveArr');
             var yAveArr = sessionStorage.getItem('yAveArr');
@@ -270,9 +280,9 @@
         }
         function findX(value) {
             var i = rangeFrom;
-            for (i; i<rangeTo; i++) {
+            for (i; i < rangeTo; i++) {
                 if (finalAve[i] == value) {
-                    return i-rangeFrom;
+                    return i - rangeFrom;
                 }
             }
         }

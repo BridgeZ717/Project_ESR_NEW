@@ -249,8 +249,10 @@
             mdg = [];
             findg = [];
             var index = alignDataIndex(dg, alignStart, alignEnd);
+           
             if (dg == dg0) {
                 dataMove = index;
+                sessionStorage.setItem('zIndex', index);
             }
             mdg = alignData(dg, dataMove, index);
             findg = cutData(mdg, rangeFrom, rangeTo);
