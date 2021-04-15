@@ -65,7 +65,7 @@
                     </svg>
                 </div>
                 <div>
-                    <h2>Move <span style="color: #00ffff">Z</span> Line</h2>
+                    <h2>Move <span style="color: #0000ff">Z</span> Line</h2>
                     <p>Put Positive number to move right,<br>Put Negative number to move left.</p>
                     <input type="text" id="moveZ" value="0">
                 </div>
@@ -80,11 +80,11 @@
                     <h2>Export to CSV File</h2>
                     <p>Please enter your file name<br>Leave it empty to use the name that entered before</p>
                     <div><input type="text" id="fileName" value="">
-                    <p></p>
-                    <a href="#" class="btn btn-dark btn-sm" onclick="exportToCsv()">
-                        Download
-                    </a>
-                </div>
+                        <p></p>
+                        <a href="#" class="btn btn-dark btn-sm" onclick="exportToCsv()">
+                            Download
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -100,9 +100,15 @@
         var yAve = [];
         var zAve = [];
         var finalAve;
-        var finX ;
-        var finY ;
-        var finZ ;
+        var finX;
+        var finY;
+        var finZ;
+        var cutedX;
+        var cutedY;
+        var cutedZ;
+        var cutedMerge;
+        var rangeFrom = parseInt(sessionStorage.getItem('rangeFrom'));
+        var rangeTo = parseInt(sessionStorage.getItem('rangeTo'));
         createChart();
         async function createChart() {
             var moveX = parseInt(document.getElementById("moveX").value);
@@ -119,9 +125,6 @@
             xlabelsFlag = 0;
             //degree = 0;
             await getData();
-            for (var i = 0; i < xAve.length; i++) {
-                xlabels.push(i);
-            }
             //move array start
             finX = movingArr(xAve, finX, moveX);
             finY = movingArr(yAve, finY, moveY);
@@ -136,7 +139,16 @@
             }
             finAverage(finalAve, finX, finY, finZ)
             minMax();
+
+            cutedX = cutData(finX, rangeFrom, rangeTo);
+            cutedY = cutData(finY, rangeFrom, rangeTo);
+            cutedZ = cutData(finZ, rangeFrom, rangeTo);
+            cutedMerge = cutData(finalAve, rangeFrom, rangeTo);
             findWavePoint();
+            for (var i = 0; i < cutedMerge.length; i++) {
+                xlabels.push(i);
+            }
+
             var ctx = document.getElementById('myChart').getContext('2d');
             window.chart = new Chart(ctx, {
                 // The type of chart we want to create
@@ -150,7 +162,7 @@
                         //backgroundColor: 'rgb(255, 99, 132)',
                         borderWidth: 2,
                         borderColor: 'rgb(255, 0, 0)',
-                        data: finalAve,
+                        data: cutedMerge,
                         pointRadius: 0,
                         PointHoverRadius: 3
                     }, {
@@ -159,7 +171,7 @@
                         //backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(0, 255, 0)',
                         borderWidth: 2,
-                        data: finX,
+                        data: cutedX,
                         pointRadius: 0,
                         PointHoverRadius: 3
                     }, {
@@ -168,16 +180,16 @@
                         //backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 0, 255)',
                         borderWidth: 2,
-                        data: finY,
+                        data: cutedY,
                         pointRadius: 0,
                         PointHoverRadius: 3
                     }, {
                         label: 'Z average',
                         fill: false,
                         //backgroundColor: 'rgb(255, 99, 132)',
-                        borderColor: 'rgb(0, 255, 255)',
+                        borderColor: 'rgb(0, 0, 255)',
                         borderWidth: 2,
-                        data: finZ,
+                        data: cutedZ,
                         pointRadius: 0,
                         PointHoverRadius: 3
                     }]
@@ -219,7 +231,13 @@
                 zAve.push(elt);
             });
         }
-
+        function cutData(arr, start, end) {
+            var tempArr = [];
+            for (start; start < end; start++) {
+                tempArr.push(arr[start]);
+            }
+            return tempArr;
+        }
         function finAverage(arr, x, y, z) {
             for (var i = 0; i < x.length; i++) {
                 var ave = ((+x[i]) + (+y[i]) + (+z[i])) / 3
@@ -251,9 +269,10 @@
             document.getElementById("minmax").innerHTML += "Spectra Min(At X: " + tempMinX + "): " + tempArr[1];
         }
         function findX(value) {
-            for (var i = 0; i <= finalAve.length; i++) {
+            var i = rangeFrom;
+            for (i; i<rangeTo; i++) {
                 if (finalAve[i] == value) {
-                    return i;
+                    return i-rangeFrom;
                 }
             }
         }
@@ -268,7 +287,7 @@
                 ["X_Average", "Y_Average", "Z_Average", "Merge",],
                 //["name2", "city2", "more info"]
             ];
-            
+
             for (var i = 1; i < finX.length; i++) {
                 rows[i] = [finX[i], finY[i], finZ[i], finalAve[i]];
             }
@@ -280,13 +299,13 @@
             var encodedUri = encodeURI(csvContent);
             var link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            
+
             // enter and check file name
             var filename;
-            if (document.getElementById("fileName").value==''){
+            if (document.getElementById("fileName").value == '') {
                 fileName = localStorage.getItem("storageName");
             }
-            else{
+            else {
                 fileName = document.getElementById("fileName").value;
             }
             link.setAttribute("download", fileName);
