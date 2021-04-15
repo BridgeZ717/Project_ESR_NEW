@@ -74,7 +74,7 @@
                         <p>Move <span style="color: #ff0000">0 dg</span> dataset (Positive move right, Negative move
                             left.) </p>
                         <input type="text" id="moveDg0" value="0">
-                    
+
                     </div>
                 </div>
                 <a href="#" class="btn btn-primary" onclick="createChart()">
@@ -108,11 +108,12 @@
     var dg160 = getData(dg160Text);
     var dg180Text = sessionStorage.getItem('X180dg');
     var dg180 = getData(dg180Text);
-
+    var sampleDg0 = dg0;
+    var sampleDg20 = dg20;
     var dataMove;
     var mdg0, mdg20, mdg40, mdg60, mdg80, mdg100, mdg120, mdg140, mdg160, mdg180;//moved dg
     var findg0, findg20, findg40, findg60, findg80, findg100, findg120, findg140, findg160, findg180;//cuted dg
-    
+
     createSampleChart();
 
     function getData(text) {
@@ -151,7 +152,7 @@
     function alignData(arr, dataMove, alignIndex) {
         var tempArr = [];
         for (var i = 0; i < arr.length; i++) {
-            tempArr.push(arr[i+alignIndex - dataMove]);
+            tempArr.push(arr[i + alignIndex - dataMove]);
         }
         return tempArr;
     }
@@ -186,8 +187,6 @@
 
     async function createSampleChart() {
         var sampleXlabels = setXlabel(dg0)
-        var sampleDg0 = dg0;
-        var sampleDg20 = dg20;
         //create chart start
         var ctx = document.getElementById('SampleChart').getContext('2d');
         window.chart = new Chart(ctx, {
@@ -247,9 +246,9 @@
 
         document.getElementById("minmax").innerHTML = '<div class="container py-5" id="hanging-icons"><div class="row g-5 py-5"><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg></div><div><h2 class="display-5">X Maximum Point Table</h2><table class="table"><thead><tr><th scope="col">Max 0dg-180dg</th></tr></thead><tbody id="tableContent"></tbody></table></div></div><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"></use></svg></div><div><h2 class="display-5">X Maximum Point Chart</h2><canvas id="maxChart"></canvas></div></div></div></div>';
 
-        function execute(dg, mdg, findg, rangeFrom, rangeTo, alignStart, alignEnd,mdgName,findgName) {
-            mdg=[];
-            findg=[];
+        function execute(dg, mdg, findg, rangeFrom, rangeTo, alignStart, alignEnd, mdgName, findgName) {
+            mdg = [];
+            findg = [];
             var index = alignDataIndex(dg, alignStart, alignEnd);
             if (dg == dg0) {
                 dataMove = index;
@@ -259,8 +258,6 @@
             window[mdgName] = mdg;
             window[findgName] = findg;
             var max = findMax(findg);
-            console.log(mdgName+' '+max)
-
             maxArr.push(max);
             degrees.push(degree);
             //set max table
@@ -268,27 +265,26 @@
             degree += 20;
         }
 
-        dg0=move0dg(move0);
-        console.log(mdg0);
-        await execute(dg0, mdg0, findg0, rangeFrom, rangeTo, alignStart, alignTo,'mdg0','findg0');
-        await execute(dg20, mdg20, findg20, rangeFrom, rangeTo, alignStart, alignTo,'mdg20','findg20');
-        await execute(dg40, mdg40, findg40, rangeFrom, rangeTo, alignStart, alignTo,'mdg40','findg40');
-        await execute(dg60, mdg60, findg60, rangeFrom, rangeTo, alignStart, alignTo,'mdg60','findg60');
-        await execute(dg80, mdg80, findg80, rangeFrom, rangeTo, alignStart, alignTo,'mdg80','findg80');
-        await execute(dg100, mdg100, findg100, rangeFrom, rangeTo, alignStart, alignTo,'mdg100','findg100');
-        await execute(dg120, mdg120, findg120, rangeFrom, rangeTo, alignStart, alignTo,'mdg120','findg120');
-        await execute(dg140, mdg140, findg140, rangeFrom, rangeTo, alignStart, alignTo,'mdg140','findg140');
-        await execute(dg160, mdg160, findg160, rangeFrom, rangeTo, alignStart, alignTo,'mdg160','findg160');
-        await execute(dg180, mdg180, findg180, rangeFrom, rangeTo, alignStart, alignTo,'mdg180','findg180');
-        
+        dg0 = move0dg(move0);
+        await execute(dg0, mdg0, findg0, rangeFrom, rangeTo, alignStart, alignTo, 'mdg0', 'findg0');
+        await execute(dg20, mdg20, findg20, rangeFrom, rangeTo, alignStart, alignTo, 'mdg20', 'findg20');
+        await execute(dg40, mdg40, findg40, rangeFrom, rangeTo, alignStart, alignTo, 'mdg40', 'findg40');
+        await execute(dg60, mdg60, findg60, rangeFrom, rangeTo, alignStart, alignTo, 'mdg60', 'findg60');
+        await execute(dg80, mdg80, findg80, rangeFrom, rangeTo, alignStart, alignTo, 'mdg80', 'findg80');
+        await execute(dg100, mdg100, findg100, rangeFrom, rangeTo, alignStart, alignTo, 'mdg100', 'findg100');
+        await execute(dg120, mdg120, findg120, rangeFrom, rangeTo, alignStart, alignTo, 'mdg120', 'findg120');
+        await execute(dg140, mdg140, findg140, rangeFrom, rangeTo, alignStart, alignTo, 'mdg140', 'findg140');
+        await execute(dg160, mdg160, findg160, rangeFrom, rangeTo, alignStart, alignTo, 'mdg160', 'findg160');
+        await execute(dg180, mdg180, findg180, rangeFrom, rangeTo, alignStart, alignTo, 'mdg180', 'findg180');
+
         xlabels = setXlabel(findg0);
-        console.log(dg20);
         //calculate and save average array 
         var aveArr = average(mdg0, mdg20, mdg40, mdg60, mdg80, mdg100, mdg120, mdg140, mdg160, mdg180);
         sessionStorage.setItem('xAveArr', aveArr);
 
         var ctx = document.getElementById('myChart').getContext('2d');
         if (window.chart && window.chart !== null) {
+            console.log("clear!")
             window.chart.destroy();
             createSampleChart();
         }
