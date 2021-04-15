@@ -112,12 +112,11 @@
         var xIndex = parseInt(sessionStorage.getItem('xIndex'));
         var yIndex = parseInt(sessionStorage.getItem('yIndex'));
         var zIndex = parseInt(sessionStorage.getItem('zIndex'));
-
+        var moveX ;
+        var moveY ;
+        var moveZ ;
         createChart();
         async function createChart() {
-            var moveX = parseInt(document.getElementById("moveX").value);
-            var moveX = parseInt(document.getElementById("moveY").value);
-            var moveZ = parseInt(document.getElementById("moveZ").value);
             finX = [];
             finY = [];
             finZ = [];
@@ -129,19 +128,34 @@
             xlabelsFlag = 0;
             //degree = 0;
             await getData();
-                    //auto align start
-        finX = movingArr(xAve, finX, 0);
-        finY = movingArr(yAve, finY, xIndex - yIndex);
-        finZ = movingArr(zAve, finZ, xIndex - zIndex);
-console.log(yAve);
-console.log(yIndex)
-            //move array start
+            //auto align start
+            moveX = 0;
+            moveY = xIndex - yIndex;
+            moveZ = xIndex - zIndex;
+            console.log(yAve)
             finX = movingArr(xAve, finX, moveX);
+            if (moveY!=0) {
+                finY = movingArr(yAve, finY, moveY);
+                console.log(finY)
+            }
+            if (moveZ!=0) {
+                finZ = movingArr(zAve, finZ, moveZ);
+            }
+
+            //move array start
+             moveX = parseInt(document.getElementById("moveX").value);
+             moveY = parseInt(document.getElementById("moveY").value);
+             moveZ = parseInt(document.getElementById("moveZ").value);
+            if(moveX!=0)
+            finX = movingArr(xAve, finX, moveX);
+            if(moveY!=0)
             finY = movingArr(yAve, finY, moveY);
+            if(moveZ!=0)
             finZ = movingArr(zAve, finZ, moveZ);
+   
             finAverage(finalAve, finX, finY, finZ)
             minMax();
-            
+
             cutedX = cutData(finX, rangeFrom, rangeTo);
             cutedY = cutData(finY, rangeFrom, rangeTo);
             cutedZ = cutData(finZ, rangeFrom, rangeTo);
@@ -213,12 +227,14 @@ console.log(yIndex)
         }
 
         function movingArr(Arr, finArr, move) {
+            finArr = [];
             for (var i = -move; i < Arr.length; i++) {
                 var Tempdata = Arr[i];
                 finArr.push(Tempdata);
 
             }
             return finArr;
+
         }
         async function getData() {
             var xAveArr = sessionStorage.getItem('xAveArr');
