@@ -235,7 +235,9 @@
         var move0 = parseInt(document.getElementById("moveDg0").value);
         //var dataBefore = parseInt(document.getElementById("dataBefore").value);//?? still need or not?
         var rangeFrom = parseInt(document.getElementById("start").value);
+        sessionStorage.setItem('rangeFrom', rangeFrom);
         var rangeTo = parseInt(document.getElementById("end").value);
+        sessionStorage.setItem('rangeTo', rangeTo);
         var alignStart = parseInt(document.getElementById("alignStart").value);
         var alignTo = parseInt(document.getElementById("alignEnd").value);
         var maxArr = [];
