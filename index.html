@@ -34,6 +34,7 @@
   </div>
 
   <form enctype="multipart/form-data">
+
     <input id="upload" type=file name="files[]" size=30 multiple>
   </form>
 
@@ -92,11 +93,11 @@
           var fileName = contents.split('\n')[0]
           var name = '';
           var savename='';
-          if (fileName.indexOf('_X_') != -1) {
+          if (fileName.indexOf('X_gon') != -1) {
             name += "X";
-          } else if (fileName.indexOf('_Y_') != -1) {
+          } else if (fileName.indexOf('Y_gon') != -1) {
             name += "Y";
-          } else if (fileName.indexOf('_Z_') != -1) {
+          } else if (fileName.indexOf('Z_gon') != -1) {
             name += "Z";
           }
           var endIndex = fileName.indexOf('dg_');
