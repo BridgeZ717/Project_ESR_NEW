@@ -141,9 +141,12 @@
             }
 
             //move array start
+        
              moveX = parseInt(document.getElementById("moveX").value);
-             moveY = parseInt(document.getElementById("moveY").value);
-             moveZ = parseInt(document.getElementById("moveZ").value);
+             moveY = moveY+parseInt(document.getElementById("moveY").value);
+             moveZ = moveZ+parseInt(document.getElementById("moveZ").value);
+            
+             console.log(document.getElementById("moveY"));
             if(moveX!=0)
             finX = movingArr(xAve, finX, moveX);
             if(moveY!=0)
