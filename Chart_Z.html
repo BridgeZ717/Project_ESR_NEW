@@ -83,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div id="chart"><canvas id="myChart"></canvas></div>
+    <div id="targetChart"><canvas id="myChart"></canvas></div>
     <div class="container py-5" id="minmax"></div>
 </body>
 
@@ -247,6 +247,7 @@
         document.getElementById("minmax").innerHTML = '<div class="container py-5" id="hanging-icons"><div class="row g-5 py-5"><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg></div><div><h2 class="display-5">Z Maximum Point Table</h2><table class="table"><thead><tr><th scope="col">Max 0dg-180dg</th></tr></thead><tbody id="tableContent"></tbody></table></div></div><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"></use></svg></div><div><h2 class="display-5">Z Maximum Point Chart</h2><canvas id="maxChart"></canvas></div></div></div></div>';
 
         function execute(dg, mdg, findg, rangeFrom, rangeTo, alignStart, alignEnd, mdgName, findgName) {
+            document.getElementById('targetChart').innerHTML='<canvas id="myChart"></canvas>';
             mdg = [];
             findg = [];
             var index = alignDataIndex(dg, alignStart, alignEnd);
@@ -289,10 +290,6 @@
         sessionStorage.setItem('zAveArr', aveArr);
 
         var ctx = document.getElementById('myChart').getContext('2d');
-        if (window.chart && window.chart !== null) {
-            window.chart.destroy();
-            createSampleChart();
-        }
         window.chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',

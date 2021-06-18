@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div id="chart"><canvas id="myChart"></canvas></div>
+    <div id="targetChart"><canvas id="myChart"></canvas></div>
     <div class="container py-5" id="minmax"></div>
 </body>
 
@@ -269,7 +269,7 @@
             document.getElementById("tableContent").innerHTML += '<tr><td>' + max + '</td></tr>';
             degree += 20;
         }
-
+        document.getElementById('targetChart').innerHTML='<canvas id="myChart"></canvas>';
         dg0 = move0dg(move0);
         await execute(dg0, mdg0, findg0, rangeFrom, rangeTo, alignStart, alignTo, 'mdg0', 'findg0');
         await execute(dg20, mdg20, findg20, rangeFrom, rangeTo, alignStart, alignTo, 'mdg20', 'findg20');
@@ -288,10 +288,7 @@
         sessionStorage.setItem('xAveArr', aveArr);
 
         var ctx = document.getElementById('myChart').getContext('2d');
-        if (window.chart && window.chart !== null) {
-            window.chart.destroy();
-            createSampleChart();
-        }
+        console.log(window.chart);
         window.chart = new Chart(ctx, {
             // The type of chart we want to create
             type: 'line',
