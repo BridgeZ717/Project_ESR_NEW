@@ -39,7 +39,7 @@
 
     <input id="upload" type=file name="files[]" size=30 multiple>
   </form>
-
+  <table><ul id="table"></ul></table>
   <ul id="output"></ul>
 
 
@@ -140,8 +140,10 @@
           //check if need to clear the storage
           if ((sessionStorage.getItem("storageName") == null) || sessionStorage.getItem("storageName") != savename) {
             sessionStorage.clear();
+            document.getElementById("table").innerHTML = " ";
           }
-
+          
+          document.getElementById("table").innerHTML += '<li> '+fileName+'</li>';
           sessionStorage.setItem("storageName", savename);
           var rows = contents.split('\n').slice(51);
           rows.forEach(elt => {
@@ -172,8 +174,8 @@
         const name = file.name ? file.name : 'NOT SUPPORTED';
         const type = file.type ? file.type : 'NOT SUPPORTED';
         const size = file.size ? file.size : 'NOT SUPPORTED';
-        li.textContent = `name: ${name}, type: ${type}, size: ${size}`;
-        output.appendChild(li);
+       // li.textContent = `name: ${name}, type: ${type}, size: ${size}`;
+       // output.appendChild(li);
       }
     });
   }

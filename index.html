@@ -39,7 +39,8 @@
 
     <input id="upload" type=file name="files[]" size=30 multiple>
   </form>
-
+  
+  <table><ul id="table"></ul></table>
   <ul id="output"></ul>
 
 
@@ -80,12 +81,10 @@
     ['Z160dg'],
     ['Z180dg']];
 
-
   //****** upload file start *******
   function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
     var count = 0;
-
     // Loop through the FileList and render image files as thumbnails.
     for (var i = 0, f; f = files[i]; i++) {
       var reader = new FileReader();
@@ -114,8 +113,9 @@
           //check if need to clear the storage
           if((sessionStorage.getItem("storageName")==null) ||sessionStorage.getItem("storageName")!=savename){
             sessionStorage.clear();
+            document.getElementById("table").innerHTML = " ";
           }
-
+          document.getElementById("table").innerHTML += '<li> '+fileName+'</li>';
           sessionStorage.setItem("storageName", savename);
           var rows = contents.split('\n').slice(51);
           rows.forEach(elt => {
@@ -125,20 +125,19 @@
           });
           dgs[count] = tempArr;
           sessionStorage.setItem(name, tempArr);
-          count++
+          count++;
         }
       })(reader);
-
       reader.readAsText(f);
     }
   }
 
 
-
+  // display document
   document.getElementById('upload').addEventListener('change', handleFileSelect, false);
-
   const output = document.getElementById('output');
   if (window.FileList && window.File) {
+
     document.getElementById('upload').addEventListener('change', event => {
       output.innerHTML = '';
       for (const file of event.target.files) {
@@ -146,8 +145,8 @@
         const name = file.name ? file.name : 'NOT SUPPORTED';
         const type = file.type ? file.type : 'NOT SUPPORTED';
         const size = file.size ? file.size : 'NOT SUPPORTED';
-        li.textContent = `name: ${name}, type: ${type}, size: ${size}`;
-        output.appendChild(li);
+        //li.textContent = `name: ${name}, type: ${type}, size: ${size}`;
+       // output.appendChild(li);
       }
     });
   }
