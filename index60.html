@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>ESR Tool (30 files version)</title>
+  <title>ESR Tool (57 files version)</title>
   <!-- Chart JS -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   <!-- Jquery -->
@@ -18,13 +18,13 @@
   <div class="container">
     <header class="d-flex justify-content-center py-3">
       <ul class="nav nav-pills">
-        <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
-        <li class="nav-item"><a href="Chart_X.html" class="nav-link">X Chart</a></li>
-        <li class="nav-item"><a href="Chart_Y.html" class="nav-link">Y Chart</a></li>
-        <li class="nav-item"><a href="Chart_Z.html" class="nav-link">Z Chart</a></li>
-        <li class="nav-item"><a href="Chart_Merge.html" class="nav-link">Merge Chart</a></li>
+        <li class="nav-item"><a href="index60.html" class="nav-link active">Home</a></li>
+        <li class="nav-item"><a href="Chart_X60.html" class="nav-link">X Chart</a></li>
+        <li class="nav-item"><a href="Chart_Y60.html" class="nav-link">Y Chart</a></li>
+        <li class="nav-item"><a href="Chart_Z60.html" class="nav-link">Z Chart</a></li>
+        <li class="nav-item"><a href="Chart_Merge60.html" class="nav-link">Merge Chart</a></li>
         <li class="nav-item"><a href="Help_Centre.html" class="nav-link">Help Centre</a></li>
-        <li class="nav-item"><a href="index60.html" class="nav-link">To 57 Version</a></li>
+        <li class="nav-item"><a href="index.html" class="nav-link">To 30 Version</a></li>
       </ul>
     </header>
   </div>
@@ -48,36 +48,63 @@
 <script>
   var dgs = [
     ['X0dg'],
+    ['X10dg'],
     ['X20dg'],
+    ['X30dg'],
     ['X40dg'],
+    ['X50dg'],
     ['X60dg'],
+    ['X70dg'],
     ['X80dg'],
+    ['X90dg'],
     ['X100dg'],
+    ['X110dg'],
     ['X120dg'],
+    ['X130dg'],
     ['X140dg'],
+    ['X150dg'],
     ['X160dg'],
+    ['X170dg'],
     ['X180dg'],
 
     ['Y0dg'],
+    ['Y10dg'],
     ['Y20dg'],
+    ['Y30dg'],
     ['Y40dg'],
+    ['Y50dg'],
     ['Y60dg'],
+    ['Y70dg'],
     ['Y80dg'],
+    ['Y90dg'],
     ['Y100dg'],
+    ['Y110dg'],
     ['Y120dg'],
+    ['Y130dg'],
     ['Y140dg'],
+    ['Y150dg'],
     ['Y160dg'],
+    ['Y170dg'],
     ['Y180dg'],
 
     ['Z0dg'],
+    ['Z10dg'],
     ['Z20dg'],
+    ['Z30dg'],
     ['Z40dg'],
+    ['Z50dg'],
     ['Z60dg'],
+    ['Z70dg'],
     ['Z80dg'],
+    ['Z90dg'],
     ['Z100dg'],
+    ['Z110dg'],
     ['Z120dg'],
+    ['Z130dg'],
     ['Z140dg'],
+    ['Z150dg'],
     ['Z160dg'],
+    ['Z170dg'],
     ['Z180dg']];
 
 
@@ -85,7 +112,6 @@
   function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
     var count = 0;
-
     // Loop through the FileList and render image files as thumbnails.
     for (var i = 0, f; f = files[i]; i++) {
       var reader = new FileReader();
@@ -94,8 +120,9 @@
           var tempArr = [];
           var contents = reader.result;
           var fileName = contents.split('\n')[0]
+          console.log(fileName);
           var name = '';
-          var savename='';
+          var savename = '';
           if (fileName.indexOf('X_gon') != -1) {
             name += "X";
           } else if (fileName.indexOf('Y_gon') != -1) {
@@ -105,14 +132,13 @@
           }
           var endIndex = fileName.indexOf('dg_');
           var startIndex = fileName.indexOf('gon_');
-          name+= fileName.substring(startIndex+4, endIndex+2);
-
+          name += fileName.substring(startIndex + 4, endIndex + 2);
           var endIndex2 = fileName.indexOf('s_');
           var startIndex2 = fileName.indexOf('Name;');
-          savename+= fileName.substring(startIndex2+5, endIndex2+1);
+          savename += fileName.substring(startIndex2 + 5, endIndex2 + 1);
 
           //check if need to clear the storage
-          if((sessionStorage.getItem("storageName")==null) ||sessionStorage.getItem("storageName")!=savename){
+          if ((sessionStorage.getItem("storageName") == null) || sessionStorage.getItem("storageName") != savename) {
             sessionStorage.clear();
           }
 
