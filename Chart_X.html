@@ -33,7 +33,8 @@
         </header>
     </div>
     <div id="chart">
-        <canvas id="SampleChart"></canvas>
+        <div id ="sampleChartDestory">
+        <canvas id="SampleChart"></canvas></div>
         <div class="container py-5" id="hanging-icons">
             <h2 class="pb-2 border-bottom">Chart Options</h2>
             <div class="row g-5 py-5">
@@ -203,7 +204,7 @@
                     //backgroundColor: 'rgb(255, 99, 132)',
                     borderWidth: 1,
                     borderColor: 'rgb(255, 0, 0)',
-                    data: sampleDg0,
+                    data: dg0,
                     pointRadius: 0,
                     PointHoverRadius: 3
                 }, {
@@ -270,8 +271,10 @@
             document.getElementById("tableContent").innerHTML += '<tr><td>' + max + '</td></tr>';
             degree += 20;
         }
-        document.getElementById('targetChart').innerHTML='<canvas id="myChart"></canvas>';
+        document.getElementById('targetChart').innerHTML='<canvas id="myChart"></canvas>';//destory current chrat
         dg0 = move0dg(move0);
+        document.getElementById('sampleChartDestory').innerHTML='<canvas id="SampleChart"></canvas>';//destory sample chart
+        createSampleChart();
         await execute(dg0, mdg0, findg0, rangeFrom, rangeTo, alignStart, alignTo, 'mdg0', 'findg0');
         await execute(dg20, mdg20, findg20, rangeFrom, rangeTo, alignStart, alignTo, 'mdg20', 'findg20');
         await execute(dg40, mdg40, findg40, rangeFrom, rangeTo, alignStart, alignTo, 'mdg40', 'findg40');
