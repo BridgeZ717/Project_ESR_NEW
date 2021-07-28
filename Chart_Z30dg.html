@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>X Chart (20dgVer)</title>
+    <title>Z Chart (30dgVer)</title>
     <!-- Chart JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <!-- ChartJS zoom-->
@@ -23,27 +23,28 @@
         <header class="d-flex justify-content-center py-3 border-bottom">
             <div class="col-6">
                 <ul class="nav nav-pills">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="Chart_X.html" class="nav-link active">X Chart</a></li>
-                    <li class="nav-item"><a href="Chart_Y.html" class="nav-link">Y Chart</a></li>
-                    <li class="nav-item"><a href="Chart_Z.html" class="nav-link">Z Chart</a></li>
-                    <li class="nav-item"><a href="Chart_Merge.html" class="nav-link">Merge Chart</a></li>
+                    <li class="nav-item"><a href="index_30dg.html" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="Chart_X30dg.html" class="nav-link">X Chart</a></li>
+                    <li class="nav-item"><a href="Chart_Y30dg.html" class="nav-link">Y Chart</a></li>
+                    <li class="nav-item"><a href="Chart_Z30dg.html" class="nav-link active">Z Chart</a></li>
+                    <li class="nav-item"><a href="Chart_Merge30dg.html" class="nav-link">Merge Chart</a></li>
                     <li class="nav-item"><a href="Help_Centre.html" class="nav-link">Help Centre</a></li>
                 </ul>
             </div>
             <div class="col-3">
                 <ul class="nav">
                     <a href="index_10dg.html" class="btn btn-outline-primary btn-sm" role="button">10dgVer</a>
-                        <a href="Chart_X.html" class="btn btn-outline-primary active btn-sm" role="button"
-                        aria-disabled="true">20dgVer</a>
-                    <a href="index_30dg.html" class="btn btn-outline-primary btn-sm" role="button">30dgVer</a>
+                    <a href="index.html" class="btn btn-outline-primary btn-sm" role="button">20dgVer</a>
+                    <a href="Chart_Z30dg.html" class="btn btn-outline-primary active btn-sm" role="button"
+                        aria-disabled="true">30dgVer</a>
                 </ul>
             </div>
         </header>
     </div>
     <div id="chart">
-        <div id ="sampleChartDestory">
-        <canvas id="SampleChart"></canvas></div>
+        <div id="sampleChartDestory">
+            <canvas id="SampleChart"></canvas>
+        </div>
         <div class="container py-5" id="hanging-icons">
             <h2 class="pb-2 border-bottom">Chart Options</h2>
             <div class="row g-5 py-5">
@@ -100,31 +101,31 @@
 </body>
 
 <script>
-    var dg0Text = sessionStorage.getItem('X0dg');
+    var dg0Text = sessionStorage.getItem('Z0dg');
     var dg0 = getData(dg0Text);
-    var dg20Text = sessionStorage.getItem('X20dg');
-    var dg20 = getData(dg20Text);
-    var dg40Text = sessionStorage.getItem('X40dg');
-    var dg40 = getData(dg40Text);
-    var dg60Text = sessionStorage.getItem('X60dg');
+
+    var dg30Text = sessionStorage.getItem('Z30dg');
+    var dg30 = getData(dg30Text);
+
+    var dg60Text = sessionStorage.getItem('Z60dg');
     var dg60 = getData(dg60Text);
-    var dg80Text = sessionStorage.getItem('X80dg');
-    var dg80 = getData(dg80Text);
-    var dg100Text = sessionStorage.getItem('X100dg');
-    var dg100 = getData(dg100Text);
-    var dg120Text = sessionStorage.getItem('X120dg');
+
+    var dg90Text = sessionStorage.getItem('Z90dg');
+    var dg90 = getData(dg90Text);
+
+    var dg120Text = sessionStorage.getItem('Z120dg');
     var dg120 = getData(dg120Text);
-    var dg140Text = sessionStorage.getItem('X140dg');
-    var dg140 = getData(dg140Text);
-    var dg160Text = sessionStorage.getItem('X160dg');
-    var dg160 = getData(dg160Text);
-    var dg180Text = sessionStorage.getItem('X180dg');
+
+    var dg150Text = sessionStorage.getItem('Z150dg');
+    var dg150 = getData(dg150Text);
+
+    var dg180Text = sessionStorage.getItem('Z180dg');
     var dg180 = getData(dg180Text);
     var sampleDg0 = dg0;
-    var sampleDg20 = dg20;
+    var sampleDg30 = dg30;
     var dataMove;
-    var mdg0, mdg20, mdg40, mdg60, mdg80, mdg100, mdg120, mdg140, mdg160, mdg180;//moved dg
-    var findg0, findg20, findg40, findg60, findg80, findg100, findg120, findg140, findg160, findg180;//cuted dg
+    var mdg0, mdg30, mdg60, mdg90, mdg120, mdg150, mdg180;//moved dg
+    var findg0, findg30, findg60, findg90, findg120, findg150, findg180;//cuted dg
 
     createSampleChart();
 
@@ -168,10 +169,10 @@
         }
         return tempArr;
     }
-    function average(dg0, dg20, dg40, dg60, dg80, dg100, dg120, dg140, dg160, dg180) {
+    function average(dg0, dg30, dg60, dg90, dg120, dg150, dg180) {
         var tempArr = [];
         for (var i = 0; i < dg0.length; i++) {
-            var ave = ((+dg0[i]) + (+dg20[i]) + (+dg40[i]) + (+dg60[i]) + (+dg80[i]) + (+dg100[i]) + (+dg120[i]) + (+dg140[i]) + (+dg160[i]) + (+dg180[i])) / 10
+            var ave = ((+dg0[i]) + (+dg30[i]) + (+dg60[i]) + (+dg90[i]) + (+dg120[i]) + (+dg150[i]) + (+dg180[i])) / 7
             tempArr.push(ave);
         }
         return tempArr;
@@ -222,7 +223,7 @@
                     //backgroundColor: 'rgb(255, 99, 132)',
                     borderWidth: 2,
                     borderColor: 'rgb(0, 0, 255)',
-                    data: sampleDg20,
+                    data: sampleDg30,
                     pointRadius: 0,
                     PointHoverRadius: 3
                 }]
@@ -258,13 +259,13 @@
         var xlabels = [];
         var dataMove; //how many X need to move to align
 
-        document.getElementById("minmax").innerHTML = '<div class="container py-5" id="hanging-icons"><div class="row g-5 py-5"><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg></div><div><h2 class="display-5">X Maximum Point Table</h2><table class="table"><thead><tr><th scope="col">Max 0dg-180dg</th></tr></thead><tbody id="tableContent"></tbody></table></div></div><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"></use></svg></div><div><h2 class="display-5">X Maximum Point Chart</h2><canvas id="maxChart"></canvas></div></div></div></div>';
+        document.getElementById("minmax").innerHTML = '<div class="container py-5" id="hanging-icons"><div class="row g-5 py-5"><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"></use></svg></div><div><h2 class="display-5">Z Maximum Point Table</h2><table class="table"><thead><tr><th scope="col">Max 0dg-180dg</th></tr></thead><tbody id="tableContent"></tbody></table></div></div><div class="col-md-6 d-flex align-items-start"><div class="icon-square bg-light text-dark flex-shrink-0 me-3"><svg class="bi" width="1em" height="1em"><use xlink:href="#cpu-fill"></use></svg></div><div><h2 class="display-5">Z Maximum Point Chart</h2><canvas id="maxChart"></canvas></div></div></div></div>';
 
         function execute(dg, mdg, findg, rangeFrom, rangeTo, alignStart, alignEnd, mdgName, findgName) {
             mdg = [];
             findg = [];
             var index = alignDataIndex(dg, alignStart, alignEnd);//align index
-    
+
             if (dg == dg0) {//check how many they need to move to align with 0dg.
                 dataMove = index;
                 sessionStorage.setItem('xIndex', index);//use this to align merge chart
@@ -278,27 +279,30 @@
             degrees.push(degree);
             //set max table
             document.getElementById("tableContent").innerHTML += '<tr><td>' + max + '</td></tr>';
-            degree += 20;
+            degree += 10;
         }
-        document.getElementById('targetChart').innerHTML='<canvas id="myChart"></canvas>';//destory current chrat
+        document.getElementById('targetChart').innerHTML = '<canvas id="myChart"></canvas>';
         dg0 = move0dg(move0);
-        document.getElementById('sampleChartDestory').innerHTML='<canvas id="SampleChart"></canvas>';//destory sample chart
+        document.getElementById('sampleChartDestory').innerHTML = '<canvas id="SampleChart"></canvas>';//destory sample chart
         createSampleChart();
         await execute(dg0, mdg0, findg0, rangeFrom, rangeTo, alignStart, alignTo, 'mdg0', 'findg0');
-        await execute(dg20, mdg20, findg20, rangeFrom, rangeTo, alignStart, alignTo, 'mdg20', 'findg20');
-        await execute(dg40, mdg40, findg40, rangeFrom, rangeTo, alignStart, alignTo, 'mdg40', 'findg40');
+
+        await execute(dg30, mdg30, findg30, rangeFrom, rangeTo, alignStart, alignTo, 'mdg30', 'findg30');
+
         await execute(dg60, mdg60, findg60, rangeFrom, rangeTo, alignStart, alignTo, 'mdg60', 'findg60');
-        await execute(dg80, mdg80, findg80, rangeFrom, rangeTo, alignStart, alignTo, 'mdg80', 'findg80');
-        await execute(dg100, mdg100, findg100, rangeFrom, rangeTo, alignStart, alignTo, 'mdg100', 'findg100');
+
+        await execute(dg90, mdg90, findg90, rangeFrom, rangeTo, alignStart, alignTo, 'mdg90', 'findg90');
+
         await execute(dg120, mdg120, findg120, rangeFrom, rangeTo, alignStart, alignTo, 'mdg120', 'findg120');
-        await execute(dg140, mdg140, findg140, rangeFrom, rangeTo, alignStart, alignTo, 'mdg140', 'findg140');
-        await execute(dg160, mdg160, findg160, rangeFrom, rangeTo, alignStart, alignTo, 'mdg160', 'findg160');
+
+        await execute(dg150, mdg150, findg150, rangeFrom, rangeTo, alignStart, alignTo, 'mdg150', 'findg150');
+
         await execute(dg180, mdg180, findg180, rangeFrom, rangeTo, alignStart, alignTo, 'mdg180', 'findg180');
 
         xlabels = setXlabel(findg0);
         //calculate and save average array 
-        var aveArr = average(mdg0, mdg20, mdg40, mdg60, mdg80, mdg100, mdg120, mdg140, mdg160, mdg180);
-        sessionStorage.setItem('xAveArr', aveArr);
+        var aveArr = average(mdg0, mdg30, mdg60, mdg90, mdg120, mdg150, mdg180);
+        sessionStorage.setItem('zAveArr', aveArr);
 
         var ctx = document.getElementById('myChart').getContext('2d');
         console.log(window.chart);
@@ -318,75 +322,48 @@
                     pointRadius: 0,
                     PointHoverRadius: 3
                 }, {
-                    label: '20dg',
-                    fill: false,
-                    //backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(58, 120, 187)',
-                    borderWidth: 2,
-                    data: findg20,
-                    pointRadius: 0,
-                    PointHoverRadius: 3
-                }, {
-                    label: '40dg',
+                    label: '30dg',
                     fill: false,
                     //backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(82, 132, 181)',
                     borderWidth: 2,
-                    data: findg40,
+                    data: findg30,
                     pointRadius: 0,
                     PointHoverRadius: 3
                 }, {
                     label: '60dg',
                     fill: false,
                     //backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(101, 144, 175)',
+                    borderColor: 'rgb(116, 157, 169)',
                     borderWidth: 2,
                     data: findg60,
                     pointRadius: 0,
                     PointHoverRadius: 3
                 }, {
-                    label: '80dg',
+                    label: '90dg',
                     fill: false,
                     //backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(116, 157, 169)',
+                    borderColor: 'rgb(141, 183, 156)',
                     borderWidth: 2,
-                    data: findg80,
-                    pointRadius: 0,
-                    PointHoverRadius: 3
-                }, {
-                    label: '100dg',
-                    fill: false,
-                    //backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(129, 170, 163)',
-                    borderWidth: 2,
-                    data: findg100,
+                    data: findg90,
                     pointRadius: 0,
                     PointHoverRadius: 3
                 }, {
                     label: '120dg',
                     fill: false,
                     //backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(141, 183, 156)',
+                    borderColor: 'rgb(151, 196, 148)',
                     borderWidth: 2,
                     data: findg120,
                     pointRadius: 0,
                     PointHoverRadius: 3
                 }, {
-                    label: '140dg',
-                    fill: false,
-                    //backgroundColor: 'rgb(255, 99, 132)',
-                    borderColor: 'rgb(151, 196, 148)',
-                    borderWidth: 2,
-                    data: findg140,
-                    pointRadius: 0,
-                    PointHoverRadius: 3
-                }, {
-                    label: '160dg',
+                    label: '150dg',
                     fill: false,
                     //backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(161, 210, 141)',
                     borderWidth: 2,
-                    data: findg160,
+                    data: findg150,
                     pointRadius: 0,
                     PointHoverRadius: 3
                 }, {

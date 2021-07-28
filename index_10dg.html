@@ -16,28 +16,37 @@
 
 <body>
   <div class="container">
-    <header class="d-flex justify-content-center py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="index60.html" class="nav-link active">Home</a></li>
-        <li class="nav-item"><a href="Chart_X60.html" class="nav-link">X Chart</a></li>
-        <li class="nav-item"><a href="Chart_Y60.html" class="nav-link">Y Chart</a></li>
-        <li class="nav-item"><a href="Chart_Z60.html" class="nav-link">Z Chart</a></li>
-        <li class="nav-item"><a href="Chart_Merge60.html" class="nav-link">Merge Chart</a></li>
-        <li class="nav-item"><a href="Help_Centre.html" class="nav-link">Help Centre</a></li>
-        <li class="nav-item"><a href="index.html" class="nav-link">To 30 Version</a></li>
-      </ul>
-    </header>
+    <header class="d-flex justify-content-center py-3 border-bottom">
+      <div class="col-6">
+          <ul class="nav nav-pills">
+              <li class="nav-item"><a href="index_10dg.html" class="nav-link active">Home</a></li>
+              <li class="nav-item"><a href="Chart_X10dg.html" class="nav-link">X Chart</a></li>
+              <li class="nav-item"><a href="Chart_Y10dg.html" class="nav-link">Y Chart</a></li>
+              <li class="nav-item"><a href="Chart_Z10dg.html" class="nav-link">Z Chart</a></li>
+              <li class="nav-item"><a href="Chart_Merge10dg.html" class="nav-link">Merge Chart</a></li>
+              <li class="nav-item"><a href="Help_Centre.html" class="nav-link">Help Centre</a></li>
+          </ul>
+      </div>
+      <div class="col-3">
+          <ul class="nav">
+            <a href="index_10dg.html" class="btn btn-outline-primary active btn-sm" role="button"
+            aria-disabled="true">10dgVer</a>
+              <a href="index.html" class="btn btn-outline-primary btn-sm" role="button">20dgVer</a>
+              <a href="index_30dg.html" class="btn btn-outline-primary btn-sm" role="button">30dgVer</a>
+          </ul>
+      </div>
+  </header>
   </div>
   <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">Welcome!</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Please upload all your data for ONE data set (30 files only).</p>
+      <p class="lead mb-4">Please upload all your data for ONE data set (57 files only).</p>
     </div>
   </div>
 
   <form enctype="multipart/form-data">
 
-    <input id="upload" type=file name="files[]" size=30 multiple>
+    <input id="upload" type=file name="files[]" size=57 multiple>
   </form>
   <table><ul id="table"></ul></table>
   <ul id="output"></ul>

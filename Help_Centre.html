@@ -16,19 +16,17 @@
 
 <body>
     <div class="container">
-        <header class="d-flex justify-content-center py-3">
-            <ul class="nav nav-pills">
-                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="Chart_X.html" class="nav-link">X Chart</a></li>
-                <li class="nav-item"><a href="Chart_Y.html" class="nav-link">Y Chart</a></li>
-                <li class="nav-item"><a href="Chart_Z.html" class="nav-link">Z Chart</a></li>
-                <li class="nav-item"><a href="Chart_Merge.html" class="nav-link">Merge Chart</a></li>
-                <li class="nav-item"><a href="Help_Centre.html" class="nav-link active">Help Centre</a></li>
-                <li class="nav-item"><a href="index60.html" class="nav-link">To 57 Version</a></li>
-            </ul>
+        <header class="d-flex justify-content-center py-3 border-bottom">
+            <div class="col-3">
+                <ul class="nav">
+                    <a href="index_10dg.html" class="btn btn-outline-primary btn-sm" role="button">10dgVer</a>
+                    <a href="index.html" class="btn btn-outline-primary btn-sm" role="button">20dgVer</a>
+                    <a href="index_30dg.html" class="btn btn-outline-primary  btn-sm" role="button">30dgVer</a>
+                </ul>
+            </div>
         </header>
     </div>
-<!-- Side bar -->
+    <!-- Side bar -->
     <nav id="sidebar" class="mCustomScrollbar _mCS_1 mCS-autoHide mCS_no_scrollbar" style="overflow: visible;">
         <div id="mCSB_1" class="mCustomScrollBox mCS-minimal mCSB_vertical mCSB_outside" style="max-height: none;"
             tabindex="0">
@@ -62,7 +60,7 @@
             </div>
         </div>
     </nav>
-<!--content-->
+    <!--content-->
     <div class="container" id="helpcentre">
         <h2 id="st1">
             Step1: Upload Files
@@ -72,7 +70,7 @@
         </p>
         <p>
             You need to upload your ESR sample files. (30 files in total)
-	You will see “30 files” after you uploaded.
+            You will see “30 files” after you uploaded.
         </p>
         <div class="line"></div>
 
@@ -80,38 +78,38 @@
             Step 2: Align Data for X Y Z Charts
         </h2>
         <p>
-	The chart on the top is a reference chart.
+            The chart on the top is a reference chart.
         </p>
         <img src="img/referenceChart.png" alt="Girl in a jacket" height="500">
         <p>
-            Use the BLUE LINE in the reference chart to find the x-axis range that you want to zoom in. 
-And put them in the boxes at “Set Data Range”. 
-The default value is 900-1250.
-</p>
-<p>	
-Use the YELLOW CIRCLE in the picture to help you find the range to align the data. 
-You need to roughly find the range of the point you want to align your data sets. 
-Just make sure the maximum point in this range is the same point you want to align with. 
-</p>
-<p>	
-Sometimes you need to manually adjust the 0dg data set.
-Use your pointer to hover the maximum value of both charts in the chart at the RED CIRCLE area.
-Then input how many x-axis you want to move at the “other options” boxes. 
-Click “Create Chart” button
-</p>
-<p>
-Please do same thing with Y chart and Z chart
+            Use the BLUE LINE in the reference chart to find the x-axis range that you want to zoom in.
+            And put them in the boxes at “Set Data Range”.
+            The default value is 900-1250.
+        </p>
+        <p>
+            Use the YELLOW CIRCLE in the picture to help you find the range to align the data.
+            You need to roughly find the range of the point you want to align your data sets.
+            Just make sure the maximum point in this range is the same point you want to align with.
+        </p>
+        <p>
+            Sometimes you need to manually adjust the 0dg data set.
+            Use your pointer to hover the maximum value of both charts in the chart at the RED CIRCLE area.
+            Then input how many x-axis you want to move at the “other options” boxes.
+            Click “Create Chart” button
+        </p>
+        <p>
+            Please do same thing with Y chart and Z chart
 
         </p>
         <div class="line"></div>
 
         <h2 id="st3">
-            Step 3: Merge Chart and Download Data     
+            Step 3: Merge Chart and Download Data
         </h2>
         <p>
-            Input the value that you need to adjust for each data set. 
+            Input the value that you need to adjust for each data set.
             Once been done, if you want to download the data,
-            Click the download button.       
+            Click the download button.
         </p>
     </div>
 </body>

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>ESR Tool (10dgVer)</title>
+  <title>ESR Tool (30dgVer)</title>
   <!-- Chart JS -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
   <!-- Jquery -->
@@ -16,28 +16,37 @@
 
 <body>
   <div class="container">
-    <header class="d-flex justify-content-center py-3">
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="index60.html" class="nav-link active">Home</a></li>
-        <li class="nav-item"><a href="Chart_X60.html" class="nav-link">X Chart</a></li>
-        <li class="nav-item"><a href="Chart_Y60.html" class="nav-link">Y Chart</a></li>
-        <li class="nav-item"><a href="Chart_Z60.html" class="nav-link">Z Chart</a></li>
-        <li class="nav-item"><a href="Chart_Merge60.html" class="nav-link">Merge Chart</a></li>
-        <li class="nav-item"><a href="Help_Centre.html" class="nav-link">Help Centre</a></li>
-        <li class="nav-item"><a href="index.html" class="nav-link">To 30 Version</a></li>
-      </ul>
+    <header class="d-flex justify-content-center py-3 border-bottom">
+        <div class="col-6">
+            <ul class="nav nav-pills">
+                <li class="nav-item"><a href="index_30dg.html" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="Chart_X30dg.html" class="nav-link">X Chart</a></li>
+                <li class="nav-item"><a href="Chart_Y30dg.html" class="nav-link">Y Chart</a></li>
+                <li class="nav-item"><a href="Chart_Z30dg.html" class="nav-link">Z Chart</a></li>
+                <li class="nav-item"><a href="Chart_Merge30dg.html" class="nav-link">Merge Chart</a></li>
+                <li class="nav-item"><a href="Help_Centre.html" class="nav-link">Help Centre</a></li>
+            </ul>
+        </div>
+        <div class="col-3">
+            <ul class="nav">
+                <a href="index_10dg.html" class="btn btn-outline-primary btn-sm" role="button">10dgVer</a>
+                <a href="index.html" class="btn btn-outline-primary btn-sm" role="button">20dgVer</a>
+                <a href="index_30dg.html" class="btn btn-outline-primary active btn-sm" role="button"
+                    aria-disabled="true">30dgVer</a>
+            </ul>
+        </div>
     </header>
   </div>
   <div class="px-4 py-5 my-5 text-center">
     <h1 class="display-5 fw-bold">Welcome!</h1>
     <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">Please upload all your data for ONE data set (30 files only).</p>
+      <p class="lead mb-4">Please upload all your data for ONE data set (21 files only).</p>
     </div>
   </div>
 
   <form enctype="multipart/form-data">
 
-    <input id="upload" type=file name="files[]" size=30 multiple>
+    <input id="upload" type=file name="files[]" size=21 multiple>
   </form>
   <table><ul id="table"></ul></table>
   <ul id="output"></ul>
@@ -48,63 +57,27 @@
 <script>
   var dgs = [
     ['X0dg'],
-    ['X10dg'],
-    ['X20dg'],
     ['X30dg'],
-    ['X40dg'],
-    ['X50dg'],
     ['X60dg'],
-    ['X70dg'],
-    ['X80dg'],
     ['X90dg'],
-    ['X100dg'],
-    ['X110dg'],
     ['X120dg'],
-    ['X130dg'],
-    ['X140dg'],
     ['X150dg'],
-    ['X160dg'],
-    ['X170dg'],
     ['X180dg'],
 
     ['Y0dg'],
-    ['Y10dg'],
-    ['Y20dg'],
     ['Y30dg'],
-    ['Y40dg'],
-    ['Y50dg'],
     ['Y60dg'],
-    ['Y70dg'],
-    ['Y80dg'],
     ['Y90dg'],
-    ['Y100dg'],
-    ['Y110dg'],
     ['Y120dg'],
-    ['Y130dg'],
-    ['Y140dg'],
     ['Y150dg'],
-    ['Y160dg'],
-    ['Y170dg'],
     ['Y180dg'],
 
     ['Z0dg'],
-    ['Z10dg'],
-    ['Z20dg'],
     ['Z30dg'],
-    ['Z40dg'],
-    ['Z50dg'],
     ['Z60dg'],
-    ['Z70dg'],
-    ['Z80dg'],
     ['Z90dg'],
-    ['Z100dg'],
-    ['Z110dg'],
     ['Z120dg'],
-    ['Z130dg'],
-    ['Z140dg'],
     ['Z150dg'],
-    ['Z160dg'],
-    ['Z170dg'],
     ['Z180dg']];
 
 
