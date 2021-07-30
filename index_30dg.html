@@ -81,8 +81,8 @@
     ['Z180dg']];
 
 
-  //****** upload file start *******
-  function handleFileSelect(evt) {
+//****** upload file start *******
+function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
     var count = 0;
     // Loop through the FileList and render image files as thumbnails.
@@ -93,20 +93,26 @@
           var tempArr = [];
           var contents = reader.result;
           var fileName = contents.split('\n')[0]
-          console.log(fileName);
           var name = '';
           var savename = '';
-          if (fileName.indexOf('X_gon') != -1) {
+          if (fileName.indexOf('X_') != -1) {
             name += "X";
-          } else if (fileName.indexOf('Y_gon') != -1) {
+          } else if (fileName.indexOf('Y_') != -1) {
             name += "Y";
-          } else if (fileName.indexOf('Z_gon') != -1) {
+          } else if (fileName.indexOf('Z_') != -1) {
             name += "Z";
           }
           var endIndex = fileName.indexOf('dg_');
           var startIndex = fileName.indexOf('gon_');
           name += fileName.substring(startIndex + 4, endIndex + 2);
-          var endIndex2 = fileName.indexOf('s_');
+
+          var endIndex2 = fileName.indexOf('_X');
+          if (endIndex2 == -1) {
+            endIndex2 = fileName.indexOf('_Y')
+            if (endIndex2 == -1) {
+              endIndex2 = fileName.indexOf('_Z')
+            }
+          }
           var startIndex2 = fileName.indexOf('Name;');
           savename += fileName.substring(startIndex2 + 5, endIndex2 + 1);
 
@@ -115,8 +121,7 @@
             sessionStorage.clear();
             document.getElementById("table").innerHTML = " ";
           }
-          
-          document.getElementById("table").innerHTML += '<li> '+fileName+'</li>';
+          document.getElementById("table").innerHTML += '<li> ' + fileName + '</li>';
           sessionStorage.setItem("storageName", savename);
           var rows = contents.split('\n').slice(51);
           rows.forEach(elt => {
@@ -126,10 +131,9 @@
           });
           dgs[count] = tempArr;
           sessionStorage.setItem(name, tempArr);
-          count++
+          count++;
         }
       })(reader);
-
       reader.readAsText(f);
     }
   }
