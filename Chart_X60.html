@@ -92,43 +92,43 @@
 
 <script>
     var dg0Text = sessionStorage.getItem('X0dg');
-    var dg0 = getData(dg0Text);
+    var dg0 = getData(dg0Text,'dg0');
     var dg10Text = sessionStorage.getItem('X10dg');
-    var dg10 = getData(dg10Text);
+    var dg10 = getData(dg10Text,'dg10');
     var dg20Text = sessionStorage.getItem('X20dg');
     var dg20 = getData(dg20Text);
     var dg30Text = sessionStorage.getItem('X30dg');
     var dg30 = getData(dg30Text);
     var dg40Text = sessionStorage.getItem('X40dg');
-    var dg40 = getData(dg40Text);
+    var dg40 = getData(dg40Text,'dg40');
     var dg50Text = sessionStorage.getItem('X50dg');
-    var dg50 = getData(dg50Text);
+    var dg50 = getData(dg50Text,'dg50');
     var dg60Text = sessionStorage.getItem('X60dg');
-    var dg60 = getData(dg60Text);
+    var dg60 = getData(dg60Text,'dg60');
     var dg70Text = sessionStorage.getItem('X70dg');
-    var dg70 = getData(dg70Text);
+    var dg70 = getData(dg70Text,'dg70');
     var dg80Text = sessionStorage.getItem('X80dg');
-    var dg80 = getData(dg80Text);
+    var dg80 = getData(dg80Text,'dg80');
     var dg90Text = sessionStorage.getItem('X90dg');
-    var dg90 = getData(dg90Text);
+    var dg90 = getData(dg90Text,'dg90');
     var dg100Text = sessionStorage.getItem('X100dg');
-    var dg100 = getData(dg100Text);
+    var dg100 = getData(dg100Text,'dg100');
     var dg110Text = sessionStorage.getItem('X110dg');
-    var dg110 = getData(dg110Text);
+    var dg110 = getData(dg110Text,'dg110');
     var dg120Text = sessionStorage.getItem('X120dg');
-    var dg120 = getData(dg120Text);
+    var dg120 = getData(dg120Text,'dg120');
     var dg130Text = sessionStorage.getItem('X130dg');
-    var dg130 = getData(dg130Text);
+    var dg130 = getData(dg130Text,'dg130');
     var dg140Text = sessionStorage.getItem('X140dg');
-    var dg140 = getData(dg140Text);
+    var dg140 = getData(dg140Text,'dg140');
     var dg150Text = sessionStorage.getItem('X150dg');
-    var dg150 = getData(dg150Text);
+    var dg150 = getData(dg150Text,'dg150');
     var dg160Text = sessionStorage.getItem('X160dg');
-    var dg160 = getData(dg160Text);
+    var dg160 = getData(dg160Text,'dg160');
     var dg170Text = sessionStorage.getItem('X170dg');
-    var dg170 = getData(dg170Text);
+    var dg170 = getData(dg170Text,'dg170');
     var dg180Text = sessionStorage.getItem('X180dg');
-    var dg180 = getData(dg180Text);
+    var dg180 = getData(dg180Text,'dg180');
     var sampleDg0 = dg0;
     var sampleDg20 = dg20;
     var dataMove;
@@ -137,7 +137,10 @@
 
     createSampleChart();
 
-    function getData(text) {
+        function getData(text,display) {
+        if(text==null){
+              alert("Something went wrong. Please check if your "+display+" is uploaded, and make sure the frist line inside that csv file is maching the data name. Thanks.");
+        }
         var arr = [];
         var values = text.split(',');
         for (var i = 0; i < values.length; i++) {
