@@ -252,17 +252,17 @@
             var zAveArr = sessionStorage.getItem('zAveArr');
 
 
-            var Xrows = xAveArr.split(',').slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
+            var Xrows = xAveArr.split(',').filter(elt => !isNaN(parseFloat(elt))).slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
             Xrows.forEach(elt => {
                 xAve.push(elt);
             });
 
-            var Yrows = yAveArr.split(',').slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
+            var Yrows = yAveArr.split(',').filter(elt => !isNaN(parseFloat(elt))).slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
             Yrows.forEach(elt => {
                 yAve.push(elt);
             });
 
-            var Zrows = zAveArr.split(',').slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
+            var Zrows = zAveArr.split(',').filter(elt => !isNaN(parseFloat(elt))).slice(); //each line becomes to a variable, slice(51) -> ignore index 0(title) start from index 51
             Zrows.forEach(elt => {
                 zAve.push(elt);
             });
