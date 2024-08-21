@@ -283,9 +283,8 @@
         function minMax() {
             var tempArr = [];
             for (var i = 0; i < finalAve.length; i++) {
-                if (!isNaN(finalAve[i])) {
-                    tempArr.push(finalAve[i]);
-                }
+                tempArr.push(finalAve[i]);
+                
             }
             var min = Math.min.apply(null, tempArr),
                 max = Math.max.apply(null, tempArr);
